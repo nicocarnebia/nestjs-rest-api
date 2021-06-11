@@ -1,0 +1,16 @@
+version: '3.4'
+services:
+  mysql:
+    image: mysql/mysql-server:latest
+    container_name: apiDatabase
+    ports:
+     - '3306:3306'
+    expose:
+     - '3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_pa55w0rd
+      - MYSQL_DATABASE=apiDatabase
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pa55w0rd
+    volumes:
+     - ./dump:/docker-entrypoint-initdb.d
