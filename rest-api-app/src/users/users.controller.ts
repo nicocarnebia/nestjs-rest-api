@@ -37,7 +37,7 @@ export class UsersController {
       street: createUserDto.address,
     });
 
-    const profile: Profile = await this.profilesService.create({
+    await this.profilesService.create({
       addressId: address.id,
       userId: user.id,
       ...createUserDto,

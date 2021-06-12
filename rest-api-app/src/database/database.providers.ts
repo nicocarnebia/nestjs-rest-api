@@ -9,11 +9,11 @@ export const databaseProviders = [
     useFactory: async () => {
       const sequelize = new Sequelize({
         dialect: 'mysql',
-        host: 'localhost',
-        port: 3306,
-        username: 'user',
-        password: 'pa55w0rd', //TODO: Use Environment variables!!!
-        database: 'apiDatabase',
+        host: process.env.DATABASE_HOST,
+        port: parseInt(process.env.DATABASE_PORT, 10),
+        username: process.env.DATABASE_USERNAME,
+        password: process.env.DATABASE_PASSWORD, //TODO: Use Environment variables!!!
+        database: process.env.DATABASE_NAME,
       });
       sequelize.addModels([User, Profile, Address]);
       await sequelize.sync();
