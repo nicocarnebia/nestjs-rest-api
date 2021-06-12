@@ -1,15 +1,44 @@
-import { Controller, Get, Post, Body, Param, BadRequestException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  BadRequestException,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
+import { Address } from 'src/addresses/entities/address.entity';
+import { ProfilesService } from 'src/profiles/profiles.service';
+import { Profile } from 'src/profiles/entities/profile.entity';
+import { AddressesService } from 'src/addresses/addresses.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly profilesService: ProfilesService,
+    private readonly addressesService: AddressesService,
+  ) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto) {
+    const user: User = await this.usersService.create(createUserDto);
+
+    const address: Address = await this.addressesService.create({
+      cityId: createUserDto.cityId,
+      street: createUserDto.address,
+    });
+
+    const profile: Profile = await this.profilesService.create({
+      addressId: address.id,
+      userId: user.id,
+      ...createUserDto,
+    });
+
+    console.log(user, profile, address);
+    return user;
   }
 
   @Get(':id')

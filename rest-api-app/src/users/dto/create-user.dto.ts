@@ -3,5 +3,5 @@ export class CreateUserDto {
   name: string;
   password: string;
   address: string;
-  cityId: string;
+  cityId: number;
 }

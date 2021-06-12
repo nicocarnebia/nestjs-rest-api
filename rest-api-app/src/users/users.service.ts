@@ -11,14 +11,24 @@ export class UsersService {
     private usersRepository: typeof User,
   ) {}
 
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    console.log(this.usersRepository)
+    const id = await this.usersRepository.sequelize.query(
+      'INSERT INTO Users(username, password) VALUES (?, ?);',
+      {
+        type: QueryTypes.INSERT,
+        replacements: [createUserDto.username, createUserDto.password],
+      },
+    );
+    const user = new User();
+    user.id = id[0];
+    user.username = createUserDto.username;
+    return user;
   }
 
   async findOne(id: number): Promise<User[]> {
-    //return this.usersRepository.findByPk<User>(id);
     return this.usersRepository.sequelize.query(
-      'SELECT * FROM Users WHERE id = ?;',
+      'SELECT id, username FROM Users WHERE id = ?;',
       {
         model: User,
         plain: true,
