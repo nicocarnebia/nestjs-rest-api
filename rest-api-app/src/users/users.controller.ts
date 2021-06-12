@@ -49,15 +49,19 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @Get(':id/profiles/:profileId')
   async findProfile(
-    @Param('id') id: string,
-    @Param('profileId') profileId: string,
+    @Param('id') id: number,
+    @Param('profileId') profileId: number,
   ) {
-    throw 'Not implemented yet!';
+    const profile = await this.usersService.findProfile(id, profileId);
+    if (!profile || profile.length < 1) {
+      throw new BadRequestException();
+    }
+    return profile[0];
   }
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    const user: User[] = await this.usersService.findOne(+id);
+    const user: User = await this.usersService.findOne(+id);
     if (!user) {
       throw new BadRequestException();
     }

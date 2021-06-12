@@ -25,6 +25,28 @@ export class UsersService {
     return user;
   }
 
+  async findProfile(userId: number, profileId: number): Promise<any> {
+    return this.usersRepository.sequelize.query(
+      `SELECT 
+      prof.id as id, 
+      prof.name as name, 
+      ad.street as "address.street", 
+      ci.name as "address.city", 
+      ct.name as "address.country"
+      from Profiles prof
+      inner join Users us on us.id = prof.userId
+      inner join Addresses ad on ad.id = prof.addressId
+      inner join Cities ci on ci.id = ad.cityId
+      inner join Countries ct on ct.id = ci.countryId
+      where us.id = ? and prof.id = ?;`,
+      {
+        replacements: [userId, profileId],
+        nest: true,
+        type: QueryTypes.SELECT,
+      },
+    );
+  }
+
   async findByUsername(username: string): Promise<any> {
     return this.usersRepository.sequelize.query(
       'SELECT id, username, password FROM Users WHERE username = ?;',
