@@ -1,28 +1,28 @@
 use apiDatabase;
 
 CREATE TABLE Users (
-  id int(11) NOT NULL,
+  id int(11) NOT NULL AUTO_INCREMENT,
   username varchar(255),
   password varchar(255),
   PRIMARY KEY(id)
 );
 
 CREATE TABLE Countries (
-  id int(11) NOT NULL,
+  id int(11) NOT NULL AUTO_INCREMENT,
   name varchar(255),
   PRIMARY KEY(id)
 );
 
 CREATE TABLE Cities (
-  id int(11) NOT NULL,
+  id int(11) NOT NULL AUTO_INCREMENT,
   countryId int(11) NOT NULL,
   name varchar(255),
   PRIMARY KEY(id),
   FOREIGN KEY (countryId) REFERENCES Countries(id)
 );
 
-CREATE TABLE Adresses (
-  id int(11) NOT NULL,
+CREATE TABLE Addresses (
+  id int(11) NOT NULL AUTO_INCREMENT,
   cityId int(11) NOT NULL,
   street varchar(255),
   PRIMARY KEY(id),
@@ -30,13 +30,13 @@ CREATE TABLE Adresses (
 );
 
 CREATE TABLE Profiles (
-  id int(11) NOT NULL,
+  id int(11) NOT NULL AUTO_INCREMENT,
   userId int(11) NOT NULL,
   addressId int(11) NOT NULL,
   name varchar(255),
   PRIMARY KEY(id),
   FOREIGN KEY (userId) REFERENCES Users(id),
-  FOREIGN KEY (addressId) REFERENCES Adresses(id)
+  FOREIGN KEY (addressId) REFERENCES Addresses(id)
 );
 
 INSERT INTO Countries(id, name)

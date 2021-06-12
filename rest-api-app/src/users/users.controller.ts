@@ -24,6 +24,7 @@ export class UsersController {
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
+    //TODO: This must be transactional
     const user: User = await this.usersService.create(createUserDto);
 
     const address: Address = await this.addressesService.create({
@@ -37,8 +38,15 @@ export class UsersController {
       ...createUserDto,
     });
 
-    console.log(user, profile, address);
     return user;
+  }
+
+  @Get(':id/profiles/:profileId')
+  async findProfile(
+    @Param('id') id: string,
+    @Param('profileId') profileId: string,
+  ) {
+    throw 'Not implemented yet!';
   }
 
   @Get(':id')

@@ -12,7 +12,6 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    console.log(this.usersRepository)
     const id = await this.usersRepository.sequelize.query(
       'INSERT INTO Users(username, password) VALUES (?, ?);',
       {
@@ -34,6 +33,7 @@ export class UsersService {
         plain: true,
         mapToModel: true,
         replacements: [id],
-    });
+      },
+    );
   }
 }
