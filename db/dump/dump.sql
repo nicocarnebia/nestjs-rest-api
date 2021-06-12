@@ -2,7 +2,7 @@ use apiDatabase;
 
 CREATE TABLE Users (
   id int(11) NOT NULL AUTO_INCREMENT,
-  username varchar(255),
+  username varchar(255) UNIQUE NOT NULL,
   password varchar(255),
   PRIMARY KEY(id)
 );

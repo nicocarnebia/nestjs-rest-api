@@ -12,7 +12,6 @@ export class ProfilesService {
   ) {}
 
   async create(createProfile: CreateProfileDto): Promise<Profile> {
-    console.log(this.profilesRepository)
     const id = await this.profilesRepository.sequelize.query(
       'INSERT INTO Profiles(userId, addressId, name) VALUES (?,?,?)',
       {

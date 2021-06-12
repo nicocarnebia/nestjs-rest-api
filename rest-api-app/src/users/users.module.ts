@@ -10,5 +10,6 @@ import { AddressesModule } from 'src/addresses/addresses.module';
   imports: [DatabaseModule, ProfilesModule, AddressesModule],
   controllers: [UsersController],
   providers: [UsersService, ...usersProviders],
+  exports: [UsersService],
 })
 export class UsersModule {}

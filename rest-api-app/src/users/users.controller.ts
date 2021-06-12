@@ -5,6 +5,7 @@ import {
   Body,
   Param,
   BadRequestException,
+  UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -13,6 +14,7 @@ import { Address } from 'src/addresses/entities/address.entity';
 import { ProfilesService } from 'src/profiles/profiles.service';
 import { Profile } from 'src/profiles/entities/profile.entity';
 import { AddressesService } from 'src/addresses/addresses.service';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -40,7 +42,7 @@ export class UsersController {
 
     return user;
   }
-
+  @UseGuards(JwtAuthGuard)
   @Get(':id/profiles/:profileId')
   async findProfile(
     @Param('id') id: string,

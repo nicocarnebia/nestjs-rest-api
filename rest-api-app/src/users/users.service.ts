@@ -25,10 +25,24 @@ export class UsersService {
     return user;
   }
 
-  async findOne(id: number): Promise<User[]> {
+  async findByUsername(username: string): Promise<any> {
+    return this.usersRepository.sequelize.query(
+      'SELECT id, username, password FROM Users WHERE username = ?;',
+      {
+        type: QueryTypes.SELECT,
+        model: User,
+        plain: true,
+        mapToModel: true,
+        replacements: [username],
+      },
+    );
+  }
+
+  async findOne(id: number): Promise<any> {
     return this.usersRepository.sequelize.query(
       'SELECT id, username FROM Users WHERE id = ?;',
       {
+        type: QueryTypes.SELECT,
         model: User,
         plain: true,
         mapToModel: true,
