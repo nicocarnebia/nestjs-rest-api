@@ -6,6 +6,8 @@ import {
   Param,
   BadRequestException,
   UseGuards,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -25,6 +27,7 @@ export class UsersController {
   ) {}
 
   @Post()
+  @UsePipes(new ValidationPipe())
   async create(@Body() createUserDto: CreateUserDto) {
     //TODO: This must be transactional
     const user: User = await this.usersService.create(createUserDto);
@@ -42,6 +45,7 @@ export class UsersController {
 
     return user;
   }
+
   @UseGuards(JwtAuthGuard)
   @Get(':id/profiles/:profileId')
   async findProfile(
