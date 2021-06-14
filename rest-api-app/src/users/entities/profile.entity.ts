@@ -3,11 +3,10 @@ import {
   Column,
   Model,
   PrimaryKey,
-  HasOne,
   ForeignKey,
 } from 'sequelize-typescript';
-import { Address } from 'src/addresses/entities/address.entity';
-import { User } from 'src/users/entities/user.entity';
+import { Address } from './address.entity';
+import { User } from './user.entity';
 
 @Table
 export class Profile extends Model {

@@ -1,27 +1,62 @@
-import { Injectable, Inject } from '@nestjs/common';
-import { QueryTypes } from 'sequelize';
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
+import { QueryTypes, Sequelize } from 'sequelize';
 
-import { CreateUserDto } from './dto/create-user.dto';
+import { Address } from './entities/address.entity';
+import { Profile } from './entities/profile.entity';
 import { User } from './entities/user.entity';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @Inject('USERS_REPOSITORY')
+    @InjectModel(User)
     private usersRepository: typeof User,
+    @InjectModel(Address)
+    private addressesRepository: typeof Address,
+    @InjectModel(Profile)
+    private profilesRepository: typeof Profile,
+    private sequelize: Sequelize,
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const id = await this.usersRepository.sequelize.query(
-      'INSERT INTO Users(username, password) VALUES (?, ?);',
-      {
-        type: QueryTypes.INSERT,
-        replacements: [createUserDto.username, createUserDto.password],
-      },
-    );
-    const user = new User();
-    user.id = id[0];
-    user.username = createUserDto.username;
+    let user: User;
+    try {
+      await this.sequelize.transaction(async (t) => {
+        const userId = await this.usersRepository.sequelize.query(
+          'INSERT INTO Users(username, password) VALUES (?, ?);',
+          {
+            transaction: t,
+            type: QueryTypes.INSERT,
+            replacements: [createUserDto.username, createUserDto.password],
+          },
+        );
+
+        user = new User();
+        user.id = userId[0];
+        user.username = createUserDto.username;
+
+        const addressId = await this.addressesRepository.sequelize.query(
+          'INSERT INTO Addresses(cityId, street) VALUES (?,?)',
+          {
+            transaction: t,
+            type: QueryTypes.INSERT,
+            replacements: [createUserDto.cityId, createUserDto.address],
+          },
+        );
+
+        await this.profilesRepository.sequelize.query(
+          'INSERT INTO Profiles(userId, addressId, name) VALUES (?,?,?)',
+          {
+            transaction: t,
+            type: QueryTypes.INSERT,
+            replacements: [userId[0], addressId[0], createUserDto.name],
+          },
+        );
+      });
+    } catch (err) {
+      return null;
+    }
     return user;
   }
 

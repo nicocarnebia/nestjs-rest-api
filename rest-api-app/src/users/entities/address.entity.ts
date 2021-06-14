@@ -5,7 +5,7 @@ import {
   PrimaryKey,
   ForeignKey,
 } from 'sequelize-typescript';
-import { City } from 'src/cities/entities/city.entity';
+import { City } from './city.entity';
 
 @Table
 export class Address extends Model {

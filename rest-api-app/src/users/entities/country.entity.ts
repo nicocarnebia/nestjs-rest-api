@@ -1,5 +1,5 @@
 import { Table, Column, Model, PrimaryKey, HasOne } from 'sequelize-typescript';
-import { City } from 'src/cities/entities/city.entity';
+import { City } from './city.entity';
 
 @Table
 export class Country extends Model {
