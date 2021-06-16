@@ -38,7 +38,30 @@ Then to start application:
 npm run start:dev       #for development environment
 ```
 ##### FRONT END
-cd into "/frontend-app"
+cd into "/frontend-app" and modify .env file:
+```sh
+API_URL=[API_URL]
+```
+Then to start application:
 ```sh
 npm run start:dev       #for development environment
 ```
+
+#### API details:
+
+GET /users/:uId/profiles/:pId - returns user profile having :pId as profile id
+    Requires Authorization header with a valid JWT
+POST /auth/login - System login. Returns a JWT
+POST /users - Creates a new user
+
+#### Example use cases in frontend:
+
+/login -> login form
+/register -> register form
+/profile/:userId/:profileId -> profile dashboard
+
+
+### Next steps
+- Dockerize both frontend and backend apps and include in docker-compose
+- Support environment variables for n environments
+- Add more test cases
