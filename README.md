@@ -49,16 +49,16 @@ npm run start:dev       #for development environment
 
 #### API details:
 
-GET /users/:uId/profiles/:pId - returns user profile having :pId as profile id
-    Requires Authorization header with a valid JWT
-POST /auth/login - System login. Returns a JWT
-POST /users - Creates a new user
+GET /users/:uId/profiles/:pId - returns user profile having :pId as profile id&nbsp;
+    Requires Authorization header with a valid JWT&nbsp;
+POST /auth/login - System login. Returns a JWT&nbsp;
+POST /users - Creates a new user&nbsp;
 
 #### Example use cases in frontend:
 
-/login -> login form
-/register -> register form
-/profile/:userId/:profileId -> profile dashboard
+/login -> login form&nbsp;
+/register -> register form&nbsp;
+/profile/:userId/:profileId -> profile dashboard&nbsp;
 
 
 ### Next steps
