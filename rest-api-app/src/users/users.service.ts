@@ -94,17 +94,4 @@ export class UsersService {
       },
     );
   }
-
-  async findOne(id: number): Promise<any> {
-    return this.usersRepository.sequelize.query(
-      'SELECT id, username FROM Users WHERE id = ?;',
-      {
-        type: QueryTypes.SELECT,
-        model: User,
-        plain: true,
-        mapToModel: true,
-        replacements: [id],
-      },
-    );
-  }
 }

@@ -13,7 +13,7 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -40,14 +40,5 @@ export class UsersController {
       throw new NotFoundException();
     }
     return profile[0];
-  }
-
-  @Get(':id')
-  async findOne(@Param('id') id: string) {
-    const user: User = await this.usersService.findOne(+id);
-    if (!user) {
-      throw new NotFoundException();
-    }
-    return user;
   }
 }

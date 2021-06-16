@@ -29,5 +29,6 @@ import { Profile } from './users/entities/profile.entity';
   ],
   controllers: [AppController],
   providers: [AppService],
+  exports: [SequelizeModule],
 })
 export class AppModule {}
