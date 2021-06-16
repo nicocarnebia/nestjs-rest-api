@@ -4,6 +4,7 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import ESLintPlugin from "eslint-webpack-plugin";
+import Dotenv from 'dotenv-webpack';
 
 const config: webpack.Configuration = {
   mode: "development",
@@ -55,6 +56,7 @@ const config: webpack.Configuration = {
     new ESLintPlugin({
       extensions: ["js", "jsx", "ts", "tsx"],
     }),
+    new Dotenv(),
   ],
   devtool: "inline-source-map",
   devServer: {

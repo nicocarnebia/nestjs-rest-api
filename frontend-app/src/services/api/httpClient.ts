@@ -1,11 +1,13 @@
 import axios from 'axios';
+import { AUTH_TOKEN_STORAGE_KEY } from '../../constants/jwt'
+
 
 const client = axios.create({
-  baseURL: 'http://localhost:3000/', //TODO: env variable
+  baseURL: process.env.API_URL,
 });
 
 client.interceptors.request.use(function (config) {
-    const token = localStorage.getItem('authToken'); //TODO: env variable
+    const token = localStorage.getItem(AUTH_TOKEN_STORAGE_KEY);
     config.headers.Authorization =  `Bearer ${token}`;
     return config;
 });

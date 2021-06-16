@@ -1,5 +1,6 @@
 import LoginResponse from '../../domain/LoginResponseDTO';
 import httpClient from './httpClient';
+import { AUTH_TOKEN_STORAGE_KEY } from '../../constants/jwt'
 
 export const login = async (username: string, password: string):Promise<LoginResponse> => {
   return httpClient
@@ -10,7 +11,7 @@ export const login = async (username: string, password: string):Promise<LoginRes
     .then((response) => {
       console.log(response)
       if (response.data.access_token) {
-        localStorage.setItem('authToken', response.data.access_token); //TODO: env variable
+        localStorage.setItem(AUTH_TOKEN_STORAGE_KEY, response.data.access_token);
       }
       return response.data;
     });
