@@ -46,6 +46,10 @@ const config: webpack.Configuration = {
     new HtmlWebpackPlugin({
       template: "src/index.html",
     }),
+    new MiniCssExtractPlugin({
+      filename: "styles.css",
+      chunkFilename: "styles.css"
+    }),
     new ForkTsCheckerWebpackPlugin({
       async: false,
     }),

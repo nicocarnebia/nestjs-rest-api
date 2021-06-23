@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start:dev": "webpack serve --config webpack.dev.config.ts",
+    "start:dev": "webpack serve  --host 0.0.0.0 --config webpack.dev.config.ts",
     "build": "webpack --config webpack.prod.config.ts",
     "test": "jest"
   },
